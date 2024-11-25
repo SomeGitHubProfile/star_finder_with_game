@@ -1,5 +1,5 @@
 # Декомпозиция задач
-## Задачи:
+### Задачи:
 1. Обработать входные данные:
     - Обработать (декодировать) параметры запуска.
     - Обработать изображение:
@@ -20,7 +20,7 @@
 
 Используем подход MVC (Model-View-Controller).
 
-# Пространства имен
+### Пространства имен:
 1. Model (StarClassifier)
 1. View
 1. Controller
@@ -43,22 +43,50 @@ View: эй, контроллер, пользователь хочет сохра
 ДОБАВИТЬ НОВЫЙ ВИД ОБВОДКИ!
 ДОБАВИТЬ НОВОЕ ПРЕДСТАВЛЕНИЕ (ФОРМАТ ВЫВОДА) - СКАЖЕМ, WEB ДОКУМЕНТ, TCP ПОТОК, etc.
 
-#### От 2 до 7 модулей на каждом иерархическом уровне
+TODO (и сверху, и снизу)
 
-# Интерфейсы
+От 2 до 7 модулей на каждом иерархическом уровне
 
-# Классы
+### Интерфейсы:
+1. В пространстве имён Model:
+    - StarClassifier (ну какой-то должен быть? А вдруг мы захотим другой класс, скажем, без свёрток???) TODO
+1. В пространстве имён View:
+    - ConsoleApplication
+    - StaticLibraryApplication
+    - GraphicApplication
+    - CommandLineApplication
+1. В пространстве имён Controller:
+    - Controller (а как иначе?) TODO
+1. В пространстве имён OS:
+    - FileSystem
+    - Console ??? TODO
+    - CommandLine ??? TODO
+1. В пространстве имён Errors:
+    - По идее, тут интерфейсы не нужны, достаточно просто иерархии классов Errors
 
-# Структуры данных
 
+### Классы
+1. В пространстве имён Model:
+    - StarClassifier (основной)
+    - Image (скорее всего, он будет классом) - TODO
+    - Stars (возможно, это класс) - TODO
+1. В пространстве имён View:
+    - ConsoleApplication
+    - StaticLibraryApplication
+    - GraphicApplication
+    - CommandLineApplication
+1. В пространстве имён Controller:
+    - Controller (основной)
+1. В пространстве имён OS:
+    - WindowsFileSystem
+    - Console ??? TODO
+    - CommandLine ??? TODO
+1. В пространстве имён Errors:
+    - BaseError
+    - Дописываем сюда классы ошибок по мере появления новых ошибок, чё)))
 
-// ((((
-# Структуры данных:
+### Структуры данных
 1. Pixel
+1. Image - это может быть классом
 1. Star
-
-# Классы
-1. StarClassifier
-1. FileWriter
-1. UI
-1. Error
+1. Stars - это может быть классом

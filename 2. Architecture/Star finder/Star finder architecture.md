@@ -56,8 +56,9 @@
         - Поля:
             - size_t size
         - Функции:
-            - outline_star(size_t x, size_t y)
-            - operator[size_t][size_t]
+            - outline_star(Coordinates center)
+            - operator[size_t][size_t] (TODO - если получится красиво реализовать)
+            - operator[Coordinates]
             - begin (const and non-const)
             - end (const and non-const)
     - ImageIterator
@@ -65,12 +66,10 @@
             - T& operator*
             - ImageIterator& operator++
             - bool operator!=
-            - get_x
-            - get_y
+            - get_coordinates
     - Star
         - Поля:
-            - x
-            - y
+            - coordinates
             - radius
     - Stars
         - Поля:

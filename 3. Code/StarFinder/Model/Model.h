@@ -1,6 +1,6 @@
 #include "../DataStructures/DataStructures.h"
 
-namespace Model {
+namespace model {
     class Pixel {
     public:
         unsigned char red;
@@ -27,8 +27,8 @@ namespace Model {
     public:
         const size_t size;
 
-        virtual void outline_star(DataStructures::Coordinates center) noexcept = 0;
-        virtual Pixel& operator[](DataStructures::Coordinates) noexcept = 0;
+        virtual void outline_star(data_structures::Coordinates center) noexcept = 0;
+        virtual Pixel& operator[](data_structures::Coordinates) noexcept = 0;
         virtual image_iterator begin() noexcept = 0;
         virtual image_iterator end() noexcept = 0;
         virtual const_image_iterator begin() const noexcept = 0;
@@ -37,6 +37,7 @@ namespace Model {
 
     class Star {
     public:
+
     };
 
     class StarsIterator {

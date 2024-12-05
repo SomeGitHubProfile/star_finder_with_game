@@ -76,7 +76,7 @@ MVP: https://habr.com/ru/articles/343438/
         - Поля:
             - size
         - Функции:
-            - operator[unsigned int]
+            - operator[size_t]
             - begin (const and non-const)
             - end (const and non-const)
     - StarsIterator
@@ -87,7 +87,7 @@ MVP: https://habr.com/ru/articles/343438/
             - get_index
     - Params:
         - Поля:
-            - image
+            - source_image
         - Функции:
             - new_image (наследники создают конкретный image, который будет возвращён из StarFinder'а)
             - new_stars (наследники определяют, экземпляры какого класса Stars создать)

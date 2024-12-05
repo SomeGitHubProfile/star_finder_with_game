@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../Model/Model.h"
 
 namespace operation_system {
@@ -9,6 +11,10 @@ namespace operation_system {
     };
 
     class Console {
-
+        virtual void write(const char* text) = 0;
+        virtual void write_line(const char* text) = 0;
+        virtual char read_char() = 0;
+        virtual int read_number() = 0; // TODO
+        virtual const char* read_line() = 0;
     };
 }

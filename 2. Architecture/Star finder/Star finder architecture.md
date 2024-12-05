@@ -37,6 +37,7 @@ MVP: https://habr.com/ru/articles/343438/
 
 ### Пространства имён:
 1. model
+    - base
 1. view
 1. presenter
 1. operation_system
@@ -123,12 +124,11 @@ MVP: https://habr.com/ru/articles/343438/
             - save
 
 ### Классы
-1. В пространстве имён model:
-    - BaseImage
+1. В пространстве имён model::base:
     - BaseImageIterator
-    - BaseStars
+    - BaseImage
     - BaseStarsIterator
-    - BaseParams
+    - BaseStars
     - BaseStarFinder
 1. В пространстве имён view:
     - ConsoleApplication
@@ -150,10 +150,10 @@ MVP: https://habr.com/ru/articles/343438/
             - FileSaveError
 
 ### Структуры данных
-1. В пространстве имён model:
+1. В пространстве имён model::base:
     - BasePixel
     - BaseStar
-    - BaseStarFinderParams
+    - BaseParams
 1. В пространстве имён data_structures:
     - DisjointUnionSet
 

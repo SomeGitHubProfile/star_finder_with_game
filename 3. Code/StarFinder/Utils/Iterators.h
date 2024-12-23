@@ -2,15 +2,13 @@ namespace iterators {
     template <typename T>
     class Iterator {
     public:
-        virtual Iterator<T>& operator=(const Iterator<T>& rhs) = 0;
         virtual T& operator*() = 0;
         virtual Iterator<T>& operator++() = 0;
         virtual Iterator<T>& operator++(int) = 0;
-        virtual bool operator==(const Iterator<T>& rhs) const = 0;
-        virtual bool operator!=(const Iterator<T>& rhs) const = 0;
+        virtual bool operator==(const Iterator<T>* const rhs) const = 0;
+        virtual bool operator!=(const Iterator<T>* const rhs) const = 0;
         virtual Iterator<T>* copy() const noexcept = 0;
     };
-
 
     template <typename T>
     class IteratorWrapper {
@@ -45,12 +43,12 @@ namespace iterators {
             return wrapper;
         }
 
-        bool operator==(const IteratorWrapper<T>& rhs) const {
-            return *iterator == *rhs.iterator;
+        bool operator==(const IteratorWrapper<T>* const rhs) const {
+            return *iterator == rhs.iterator;
         }
 
-        bool operator!=(const IteratorWrapper<T>& rhs) const {
-            return *iterator != *rhs.iterator;
+        bool operator!=(const IteratorWrapper<T>* const rhs) const {
+            return *iterator != rhs.iterator;
         }
 
         ~IteratorWrapper<T>() {

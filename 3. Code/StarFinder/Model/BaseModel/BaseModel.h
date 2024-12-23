@@ -9,6 +9,8 @@ namespace model::base {
     };
 
     class BaseImage : public Image {
+    private:
+        BasePixel** matrix;
     public:
         template <typename T>
         class BaseImageIterator : public ImageIterator<T> {
@@ -23,21 +25,11 @@ namespace model::base {
             BaseImageIterator(const BaseImageIterator<T>& rhs)
                 : image(rhs.image), coordinates(rhs.coordinates) {}
 
-            virtual ImageIterator<T>& operator=(const ImageIterator<T>& rhs) override {
-                if (this == &rhs) {
-                    return *this;
-                }
-
-                image = rhs.image;
-                coordinates = rhs.coordinates;
-                return *this;
-            }
-
             virtual T& operator*() override {
                 return image[coordinates];
             }
 
-            virtual ImageIterator<T>& operator++() override {
+            virtual BaseImageIterator<T>& operator++() override {
                 if (coordinates.x + 1 < image.shape.x) {
                     ++coordinates.x;
                 } else {
@@ -47,18 +39,28 @@ namespace model::base {
                 return *this;
             }
 
-            virtual ImageIterator<T>& operator++(int) override {
-                ImageIterator ret(*this);
+            virtual BaseImageIterator<T>& operator++(int) override {
+                BaseImageIterator ret(*this);
                 ++*this;
                 return ret;
             }
             
-            virtual bool operator==(const ImageIterator<T>& rhs) const override {
+            bool operator==(const ImageIterator<T>& rhs) const {
                 return this == &rhs || &image == &rhs.image && coordinates == rhs.coordinates;
             }
 
-            virtual bool operator!=(const ImageIterator<T>& rhs) const override {
+            virtual bool operator==(const Iterator<T>* const rhs) const override {
+                ImageIterator<T>* iterator = dynamic_cast<ImageIterator<T>*>(rhs);
+                return iterator != nullptr && *this == *iterator;
+            }
+
+            bool operator!=(const ImageIterator<T>& rhs) const {
                 return !(*this == rhs);
+            }
+
+            virtual bool operator!=(const Iterator<T>* const rhs) const override {
+                ImageIterator<T>* iterator = dynamic_cast<ImageIterator<T>*>(rhs);
+                return iterator == nullptr || *this != *iterator;
             }
 
             virtual inline data_structures::Coordinates get_coordinates() const noexcept override {
@@ -73,12 +75,17 @@ namespace model::base {
         typedef BaseImageIterator<BasePixel> base_image_iterator;
         typedef BaseImageIterator<const BasePixel> const_base_image_iterator;
 
+        typedef iterators::IteratorWrapper<BasePixel> base_image_iterator_wrapper;
+        typedef iterators::IteratorWrapper<const BasePixel> const_base_image_iterator_wrapper;
+
+        BaseImage(data_structures::Coordinates shape);
+
         virtual void outline_star(data_structures::Coordinates center) override;
         virtual BasePixel& operator[](data_structures::Coordinates) override;
-        virtual image_iterator begin() noexcept override;
-        virtual image_iterator end() noexcept override;
-        virtual const_image_iterator begin() const noexcept override;
-        virtual const_image_iterator end() const noexcept override;
+        virtual base_image_iterator_wrapper begin() noexcept override;
+        virtual base_image_iterator_wrapper end() noexcept override;
+        virtual const_base_image_iterator_wrapper begin() const noexcept override;
+        virtual const_base_image_iterator_wrapper end() const noexcept override;
     };
 
     struct BaseStar : public Star {
@@ -130,12 +137,22 @@ namespace model::base {
                 return ret;
             }
 
-            virtual bool operator==(const BaseStarsIterator<T>& rhs) const override {
+            bool operator==(const BaseStarsIterator<T>& rhs) const {
                 return this == &rhs || &stars == &rhs.stars && index == rhs.index;
             }
 
-            virtual bool operator!=(const BaseStarsIterator<T>& rhs) const override {
+            virtual bool operator==(const Iterator<T>* const rhs) const override {
+                BaseStarsIterator<T>* iterator = dynamic_cast<BaseStarsIterator<T>*>(rhs);
+                return iterator != nullptr && *this == *iterator;
+            }
+
+            bool operator!=(const BaseStarsIterator<T>& rhs) const {
                 return !(*this == rhs);
+            }
+
+            virtual bool operator!=(const Iterator<T>* const rhs) const override {
+                BaseStarsIterator<T>* iterator = dynamic_cast<BaseStarsIterator<T>*>(rhs);
+                return iterator == nullptr || *this != *iterator;;
             }
 
             virtual inline size_t get_index() const noexcept override {
@@ -147,7 +164,7 @@ namespace model::base {
             }
         };
 
-        typedef BaseStarsIterator<Star> ase_stars_iterator;
+        typedef BaseStarsIterator<Star> base_stars_iterator;
         typedef BaseStarsIterator<const Star> const_base_stars_iterator;
 
         virtual Star& operator[](size_t) = 0;
@@ -159,7 +176,7 @@ namespace model::base {
 
     struct BaseParams : public Params {
     public:
-        virtual Image* new_image() const override;
+        virtual Image* new_image(data_structures::Coordinates) const override;
         virtual Stars* new_stars() const override;
         virtual ~BaseParams() noexcept;
     };

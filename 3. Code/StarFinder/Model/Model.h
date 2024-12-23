@@ -13,19 +13,19 @@ namespace model {
         virtual ~Pixel() noexcept = 0;
     };
 
-    template <typename T>
-    class ImageIterator : public iterators::Iterator<T> {
-    public:
-        virtual inline data_structures::Coordinates get_coordinates() const noexcept = 0;
-    };
-
     class Image {
     public:
         const size_t size;
         const data_structures::Coordinates shape;
 
         template <typename T>
-        class ImageIteratorWrapper : public IteratorWrapper<T> {
+        class ImageIterator : public iterators::Iterator<T> {
+        public:
+            virtual inline data_structures::Coordinates get_coordinates() const noexcept = 0;
+        };
+
+        template <typename T>
+        class ImageIteratorWrapper : public iterators::IteratorWrapper<T> {
         public:
             inline data_structures::Coordinates get_coordinates() const noexcept {
                 return iterator->get_coordinates();
@@ -34,6 +34,9 @@ namespace model {
 
         typedef ImageIteratorWrapper<Pixel> image_iterator;
         typedef ImageIteratorWrapper<const Pixel> const_image_iterator;
+
+        Image(data_structures::Coordinates _shape)
+            : shape(_shape), size(_shape.x * _shape.y) {}
 
         virtual void outline_star(data_structures::Coordinates center) = 0;
         virtual Pixel& operator[](data_structures::Coordinates) = 0;
@@ -71,6 +74,8 @@ namespace model {
         typedef StarsIteratorWrapper<Star> stars_iterator;
         typedef StarsIteratorWrapper<const Star> const_stars_iterator;
 
+        Stars(size_t _size): size(_size) {}
+
         virtual Star& operator[](size_t) = 0;
         virtual stars_iterator begin() noexcept = 0;
         virtual stars_iterator end() noexcept = 0;
@@ -82,7 +87,7 @@ namespace model {
     public:
         Image* source_image;
 
-        virtual Image* new_image() const = 0;
+        virtual Image* new_image(data_structures::Coordinates shape) const = 0;
         virtual Stars* new_stars() const = 0;
     };
 

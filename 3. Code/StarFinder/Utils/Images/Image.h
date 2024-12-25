@@ -15,8 +15,8 @@ namespace images {
             return shape.x * shape.y;
         }
 
-        virtual pixels::Pixel* get_pixel(data_structures::Coordinates) = 0;
-        virtual void save(const char* file_path) const = 0; // TODO - can write now
+        virtual const pixels::Pixel* get_pixel(data_structures::Coordinates) const = 0;
+        virtual void save(const char* file_path) const = 0;
         // TODO 2 - after project end
         // we can create abstract class file which will have constructor const char* and pure virtual methods write, save, etc.
         // it can be good because we can write data to one file multiple times without closing it

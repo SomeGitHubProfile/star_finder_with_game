@@ -7,7 +7,7 @@ images::GrayImage* filters::gray::filter(images::Image* source_image) noexcept {
     for (size_t x = 0; x < image->shape.x; ++x) {
         for (size_t y = 0; y < image->shape.y; ++y) {
             data_structures::Coordinates coordinates{x, y};
-            pixels::Pixel* pixel = source_image->get_pixel(coordinates);
+            const pixels::Pixel* pixel = source_image->get_pixel(coordinates);
             double red = pixel->get_red() / 255.0;
             double green = pixel->get_green() / 255.0;
             double blue = pixel->get_blue() / 255.0;

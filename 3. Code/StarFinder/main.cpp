@@ -26,5 +26,30 @@ int main()
 	cout << "Hello CMake." << endl;
 	delete image;
 	delete t;
+
+	pixels::RGB_Pixel** matrix = new pixels::RGB_Pixel*[5];
+	for (int i = 0; i < 5; ++i) {
+		matrix[i] = new pixels::RGB_Pixel[5];
+	}
+
+	for (int i = 0; i < 5; ++i) {
+		for (int j = 0; j < 5; ++j) {
+			matrix[i][j] = pixels::RGB_Pixel(50 * i, 50 * j, 0, 255);
+		}
+	}
+
+	for (int i = 0; i < 5; ++i) {
+		for (int j = 0; j < 5; ++j) {
+			cout << (int)matrix[i][j].get_red() << " " << (int)matrix[i][j].get_green() << " --- ";
+		}
+		cout << "\n";
+	}
+
+	cout << "Tesing virtual array))\n";
+
+	for (int i = 0; i < 5; ++i) {
+		delete[] matrix[i];
+	}
+	delete[] matrix;
 	return 0;
 }

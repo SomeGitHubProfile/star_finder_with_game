@@ -28,11 +28,12 @@ namespace images {
             return matrix[coordinates.x][coordinates.y];
         }
 
-        virtual inline pixels::Pixel* get_pixel(data_structures::Coordinates coordinates) override {
+        virtual inline const pixels::Pixel* get_pixel(data_structures::Coordinates coordinates) const override {
             return matrix[coordinates.x] + coordinates.y;
         }
 
         virtual void save(const char* path) const override {
+            return operation_system::file_system.save_image(path, this);
         }
     };
 }

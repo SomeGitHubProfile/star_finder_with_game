@@ -12,7 +12,7 @@ unsigned char clamp_sum(double sum) {
     return round(sum);
 }
 
-void get_3x3_kernels(unsigned char* shift, unsigned char* kernel_size, unsigned char*** horizontal_destination, unsigned char*** vertical_destination) {
+void get_3x3_kernels(unsigned char* shift, unsigned char* kernel_size, char*** horizontal_destination, char*** vertical_destination) {
     *shift = 1;
     *kernel_size = *shift * 2 + 1;
     const char horizontal_kernel[3][3] = {
@@ -25,11 +25,11 @@ void get_3x3_kernels(unsigned char* shift, unsigned char* kernel_size, unsigned 
         {-2, +0, +2},
         {-1, +0, +1}
     };
-    *horizontal_destination = new unsigned char*[*kernel_size];
-    *vertical_destination = new unsigned char*[*kernel_size];
+    *horizontal_destination = new char*[*kernel_size];
+    *vertical_destination = new char*[*kernel_size];
     for (int i = 0; i < *kernel_size; ++i) {
-        (*horizontal_destination)[i] = new unsigned char[*kernel_size];
-        (*vertical_destination)[i] = new unsigned char[*kernel_size];
+        (*horizontal_destination)[i] = new char[*kernel_size];
+        (*vertical_destination)[i] = new char[*kernel_size];
         for (int j = 0; j < *kernel_size; ++j) {
             (*horizontal_destination)[i][j] = horizontal_kernel[i][j];
             (*vertical_destination)[i][j] = vertical_kernel[i][j];
@@ -38,7 +38,7 @@ void get_3x3_kernels(unsigned char* shift, unsigned char* kernel_size, unsigned 
     return;
 }
 
-void get_5x5_kernels(unsigned char* shift, unsigned char* kernel_size, unsigned char*** horizontal_destination, unsigned char*** vertical_destination) {
+void get_5x5_kernels(unsigned char* shift, unsigned char* kernel_size, char*** horizontal_destination, char*** vertical_destination) {
     *shift = 2;
     *kernel_size = *shift * 2 + 1;
     const char horizontal_kernel[5][5] = {
@@ -55,11 +55,11 @@ void get_5x5_kernels(unsigned char* shift, unsigned char* kernel_size, unsigned 
         {+2, +1, 0, -1, -2},
         {+2, +1, 0, -1, -2}
     };
-    *horizontal_destination = new unsigned char*[*kernel_size];
-    *vertical_destination = new unsigned char*[*kernel_size];
+    *horizontal_destination = new char*[*kernel_size];
+    *vertical_destination = new char*[*kernel_size];
     for (int i = 0; i < *kernel_size; ++i) {
-        (*horizontal_destination)[i] = new unsigned char[*kernel_size];
-        (*vertical_destination)[i] = new unsigned char[*kernel_size];
+        (*horizontal_destination)[i] = new char[*kernel_size];
+        (*vertical_destination)[i] = new char[*kernel_size];
         for (int j = 0; j < *kernel_size; ++j) {
             (*horizontal_destination)[i][j] = horizontal_kernel[i][j];
             (*vertical_destination)[i][j] = vertical_kernel[i][j];
@@ -68,7 +68,7 @@ void get_5x5_kernels(unsigned char* shift, unsigned char* kernel_size, unsigned 
     return;
 }
 
-void get_kernels(unsigned char* shift, unsigned char* kernel_size, unsigned char*** horizontal_destination, unsigned char*** vertical_destination, filters::sobel::KernelTypes kernel_type) {
+void get_kernels(unsigned char* shift, unsigned char* kernel_size, char*** horizontal_destination, char*** vertical_destination, filters::sobel::KernelTypes kernel_type) {
     switch (kernel_type) {
         case filters::sobel::KernelTypes::SobelKernel_3x3:
             get_3x3_kernels(shift, kernel_size, horizontal_destination, vertical_destination);
@@ -83,7 +83,7 @@ void get_kernels(unsigned char* shift, unsigned char* kernel_size, unsigned char
     return;
 }
 
-void delete_kernels(unsigned char** horizontal_kernel, unsigned char** vertical_kernel, unsigned char kernel_size) {
+void delete_kernels(char** horizontal_kernel, char** vertical_kernel, unsigned char kernel_size) {
     for (unsigned char i = 0; i < kernel_size; ++i) {
         delete[] horizontal_kernel[i];
         delete[] vertical_kernel[i];
@@ -95,8 +95,8 @@ void delete_kernels(unsigned char** horizontal_kernel, unsigned char** vertical_
 
 images::GrayImage* filters::sobel::filter(images::GrayImage* source_image, KernelTypes kernel_type) noexcept {
     unsigned char shift, kernel_size;
-    unsigned char** horizontal_kernel;
-    unsigned char** vertical_kernel;
+    char** horizontal_kernel;
+    char** vertical_kernel;
     get_kernels(&shift, &kernel_size, &horizontal_kernel, &vertical_kernel, kernel_type);
     images::GrayImage* image = new images::GrayImage(source_image->shape);
     for (unsigned x = shift; x < image->shape.x - shift; ++x) {

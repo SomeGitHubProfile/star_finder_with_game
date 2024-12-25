@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../Utils/Pixels/Pixel.h"
 #include "../Utils/Pixels/RGB/RGB_Pixel.h"
+#include "../Utils/Images/Image.h"
 
 namespace operation_system {
-    class FileSystem {
+    static class FileSystem {
     public:
-        virtual pixels::RGB_Pixel** read_image(const char* path) const = 0;
-        virtual void save_image(const char* path, const pixels::Pixel** matrix) const = 0;
-    };
+        pixels::RGB_Pixel** read_image(const char*) const;
+        void save_image(const char*, const images::Image*) const;
+    } file_system;
 }

@@ -1,10 +1,12 @@
+#pragma once
+
 namespace errors {
     class BaseError {
         const char* text;
     };
 
     class FileError : public BaseError {
-        const char* path;
+        const char* file_path;
     };
 
     class FileLoadError : public FileError {};

@@ -45,6 +45,7 @@ MVP: https://habr.com/ru/articles/343438/
 1. filters
 1. data_structures
 1. config
+1. iterators
 
 ### Интерфейсы:
 1. В пространстве имён model:
@@ -122,6 +123,15 @@ MVP: https://habr.com/ru/articles/343438/
         - Функции:
             - load
             - save
+1. В пространстве имён iterators:
+    - Iterator<T>
+        - Функции:
+            - operator*
+            - operator++
+            - operator++(int)
+            - operator==
+            - operator!=
+            - copy
 
 ### Классы
 1. В пространстве имён model::base:
@@ -148,6 +158,8 @@ MVP: https://habr.com/ru/articles/343438/
             - FileLoadError
             - FileReadError
             - FileSaveError
+1. В пространстве имён iterators:
+    - IteratorWrapper<T>
 
 ### Структуры данных
 1. В пространстве имён model::base:

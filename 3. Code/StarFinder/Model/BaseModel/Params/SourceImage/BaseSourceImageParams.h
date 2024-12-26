@@ -1,10 +1,7 @@
 #pragma once
 
 #include "../../../../Utils/Pixels/RGB/RGB_Pixel.h"
-#include "../../SourceImage/BaseSourceImage.h"
 #include "../../../../Utils/Images/MatrixImageDto.h"
-
-#include <iostream>
 
 namespace model::base::params {
     class BaseSourceImageParams {
@@ -25,9 +22,6 @@ namespace model::base::params {
         OutlineTypes outline_type;
 
         BaseSourceImageParams(const char*, pixels::RGB_Pixel, pixels::RGB_Pixel, size_t);
-        ~BaseSourceImageParams() {
-            std::cout << "Destructor of base source image params\n";
-        }
         void init_source_image_dto();
     };
 }

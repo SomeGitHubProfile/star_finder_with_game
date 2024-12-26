@@ -8,7 +8,7 @@ namespace model::base {
         BaseStars();
         BaseStars(size_t size);
 
-        virtual Star* operator[](size_t) override;
+        virtual Star* get_star(size_t) override;
         virtual void add_star(Star*) noexcept override;
     };
 }

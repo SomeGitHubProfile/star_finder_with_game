@@ -5,7 +5,7 @@ model::base::BaseStars::BaseStars() : Stars() {}
 model::base::BaseStars::BaseStars(size_t size) : Stars(size) {}
 
 
-model::Star* model::base::BaseStars::operator[](size_t) {
+model::Star* model::base::BaseStars::get_star(size_t) {
     return nullptr;
 }
 

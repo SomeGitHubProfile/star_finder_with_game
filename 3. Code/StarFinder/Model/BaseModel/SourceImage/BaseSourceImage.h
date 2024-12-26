@@ -4,12 +4,12 @@
 #include "../../SourceImage.h"
 #include "../Params/SourceImage/BaseSourceImageParams.h"
 
+using namespace model::base::params;
+
 namespace model::base {
-    namespace params {
-        class BaseSourceImageParams; // oh no, cringe
-    }
     class BaseSourceImage : public virtual images::RGB_Image, public virtual SourceImage {
     private:
+        BaseSourceImageParams image_params;
         void outline_star(data_structures::Coordinates center) noexcept;
 
     public:

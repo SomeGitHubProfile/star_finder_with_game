@@ -16,7 +16,8 @@ images::GrayImage* model::base::BaseStarFinder::get_boundaries_image() const noe
 }
 
 void model::base::BaseStarFinder::find_stars() noexcept {
-    
+    images::GrayImage* boundaries_image = get_boundaries_image();
+
 }
 
 model::SourceImage* model::base::BaseStarFinder::get_image() noexcept {

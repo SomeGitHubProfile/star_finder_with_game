@@ -5,8 +5,6 @@
 #include "../../../../Filters/Gaussian/GaussianFilter.h"
 #include "../../../../Filters/Sobel/SobelFilter.h"
 
-#include <iostream>
-
 namespace model::base::params {
     class BaseStarFinderParams : public Params {
     public:
@@ -15,11 +13,9 @@ namespace model::base::params {
 
         filters::gaussian::KernelTypes gaussian_kernel_type;
         filters::sobel::KernelTypes sobel_kernel_type;
+        unsigned char boundaries_detection_strength;
 
         BaseStarFinderParams(SourceImage* source_image);
-        virtual ~BaseStarFinderParams() {
-            std::cout << "Base star finder params destructor\n";
-        }
 
         virtual Stars* new_stars() const override;
     };

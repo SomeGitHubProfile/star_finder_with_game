@@ -1,8 +1,7 @@
 #pragma once
 
 #include "../Pixels/RGB/RGB_Pixel.h"
-
-#include <iostream>
+#include "../Coordinates.h"
 
 namespace images {
     /* TODO TODO TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -17,6 +16,7 @@ namespace images {
             delete[] matrix[x];
         }
         delete[] matrix;
+        return;
     }
 
     template<typename T>
@@ -35,8 +35,7 @@ namespace images {
             }
         }
 
-        MatrixImageDto<T>(const MatrixImageDto& rhs) {
-            shape = rhs.shape;
+        MatrixImageDto<T>(const MatrixImageDto& rhs) : shape(rhs.shape) {
             matrix = new T * [shape.x];
             for (size_t x = 0; x < shape.x; ++x) {
                 matrix[x] = new T[shape.y];
@@ -44,6 +43,10 @@ namespace images {
                     matrix[x][y] = rhs.matrix[x][y];
                 }
             }
+        }
+
+        MatrixImageDto<T>(MatrixImageDto&& rhs) : shape(rhs.shape) {
+            matrix = rhs.matrix;
         }
 
         MatrixImageDto<T>& operator=(const MatrixImageDto<T>& rhs) {
@@ -63,7 +66,6 @@ namespace images {
         }
 
         ~MatrixImageDto<T>() {
-            std::cout << "Matrix destructor called\n";
             delete_matrix<T>(shape, matrix);
         }
     };

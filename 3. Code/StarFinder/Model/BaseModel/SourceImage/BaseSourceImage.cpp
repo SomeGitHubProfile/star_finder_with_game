@@ -1,11 +1,10 @@
 #include "BaseSourceImage.h"
 
-#include <iostream>
-
-model::base::BaseSourceImage::BaseSourceImage(const params::BaseSourceImageParams& image_params)
-    : images::RGB_Image(image_params.dto.shape),
-    SourceImage(image_params.dto.shape),
-    images::Image(image_params.dto.shape) {
+model::base::BaseSourceImage::BaseSourceImage(const params::BaseSourceImageParams& _image_params)
+    : image_params(_image_params),
+    images::RGB_Image(_image_params.dto.shape),
+    SourceImage(_image_params.dto.shape),
+    images::Image(_image_params.dto.shape) {
     for (size_t x = 0; x < image_params.dto.shape.x; ++x) {
         for (size_t y = 0; y < image_params.dto.shape.y; ++y) {
             matrix[x][y] = image_params.dto.matrix[x][y];
@@ -14,7 +13,7 @@ model::base::BaseSourceImage::BaseSourceImage(const params::BaseSourceImageParam
 }
 
 void model::base::BaseSourceImage::outline_star(data_structures::Coordinates center) noexcept {
-    std::cout << "Outlined\n";
+    return;
 }
 
 const pixels::Pixel* model::base::BaseSourceImage::get_pixel(data_structures::Coordinates coordinates) const {
@@ -22,6 +21,6 @@ const pixels::Pixel* model::base::BaseSourceImage::get_pixel(data_structures::Co
 }
 
 images::Image* model::base::BaseSourceImage::outline_stars(Stars* stars) noexcept {
-    std::cout << "Outlined\n";
+    
     return nullptr;
 }

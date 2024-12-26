@@ -12,6 +12,7 @@
 #include "Model/BaseModel/StarFinder/BaseStarFinder.h"
 
 #include "Utils/Images/RGB_Image.h"
+#include "Utils/Images/MatrixImageDto.h"
 
 using namespace std;
 

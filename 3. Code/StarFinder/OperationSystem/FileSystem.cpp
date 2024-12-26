@@ -27,7 +27,7 @@ void delete_matrix(data_structures::Coordinates shape, pixels::RGB_Pixel** matri
     return;
 }
 
-pixels::RGB_Pixel** operation_system::FileSystem::read_image(const char* path) const {
+images::RGB_ImageDto operation_system::FileSystem::read_image(const char* path) const {
     unsigned char* encoded_image;
     unsigned error, width, height;
     error = lodepng_decode32_file(&encoded_image, &width, &height, path);
@@ -38,7 +38,9 @@ pixels::RGB_Pixel** operation_system::FileSystem::read_image(const char* path) c
     data_structures::Coordinates shape{width, height};
     pixels::RGB_Pixel** decoded_image = decode_image(shape, encoded_image);
     free(encoded_image);
-    return decoded_image;
+    images::RGB_ImageDto dto{shape, decoded_image};
+    delete_matrix(shape, decoded_image);
+    return dto;
 }
 
 unsigned char* encode_image(const images::Image* image) {

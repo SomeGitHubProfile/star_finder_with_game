@@ -14,8 +14,11 @@ namespace data_structures {
                 next(nullptr) {}
         };
 
-        const size_t size;
+    private:
         Node** table;
+
+    public:
+        const size_t size;
 
         HashTable(size_t _size) : size(_size) {
             table = new Node*[size];
@@ -52,6 +55,7 @@ namespace data_structures {
                 }
                 current->next = new Node(coordinates);
             }
+            return;
         }
 
         Node* search(const Coordinates& coordinates) {

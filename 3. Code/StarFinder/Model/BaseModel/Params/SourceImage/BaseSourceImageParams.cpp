@@ -2,6 +2,7 @@
 
 #include "../../SourceImage/BaseSourceImage.h"
 #include "../../Stars/BaseStars.h"
+#include "../../../../OperationSystem/OperationSystem.h"
 
 model::base::params::BaseSourceImageParams::BaseSourceImageParams(
     const char* _source_image_path,
@@ -15,4 +16,10 @@ model::base::params::BaseSourceImageParams::BaseSourceImageParams(
     boundary_width(_boundary_width),
     minimal_outline_radius(0),
     padding(0),
-    outline_type(OutlineTypes::Circle) {}
+    outline_type(OutlineTypes::Circle),
+    dto({0, 0}, nullptr) {}
+
+void model::base::params::BaseSourceImageParams::init_source_image_dto() {
+     dto = operation_system::file_system.read_image(source_image_path);
+     return;
+}

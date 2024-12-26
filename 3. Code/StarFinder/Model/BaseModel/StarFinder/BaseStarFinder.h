@@ -6,9 +6,10 @@
 namespace model::base {
     class BaseStarFinder : public StarFinder {
     private:
-        params::BaseStarFinderParams params;
+        params::BaseStarFinderParams star_finder_params;
 
         images::GrayImage* get_boundaries_image() const noexcept;
+        size_t get_index_in_disjoint_set(data_structures::Coordinates coordinates) const noexcept;
     public:
         BaseStarFinder(params::BaseStarFinderParams);
 

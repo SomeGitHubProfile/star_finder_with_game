@@ -13,7 +13,7 @@ namespace model::base::params {
 
         filters::gaussian::KernelTypes gaussian_kernel_type;
         filters::sobel::KernelTypes sobel_kernel_type;
-        unsigned char boundaries_detection_strength;
+        float boundaries_detection_strength;
 
         BaseStarFinderParams(SourceImage* source_image);
 

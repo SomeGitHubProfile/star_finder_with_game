@@ -32,6 +32,13 @@ pixels::RGB_Pixel** operation_system::FileSystem::read_image(const char* path) c
     return decoded_image;
 }
 
+void delete_matrix(data_structures::Coordinates shape, pixels::RGB_Pixel** matrix) {
+    for (size_t x = 0; x < shape.x; ++x) {
+        delete[] matrix[x];
+    }
+    delete[] matrix;
+}
+
 unsigned char* encode_image(const images::Image* image) {
     unsigned char* encoded_image = new unsigned char[4 * image->shape.x * image->shape.y];
     for (int i = 0; i < image->shape.x * image->shape.y; ++i) {

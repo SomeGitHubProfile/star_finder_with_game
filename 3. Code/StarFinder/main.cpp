@@ -11,6 +11,8 @@
 #include "Model/BaseModel/SourceImage/BaseSourceImage.h"
 #include "Model/BaseModel/StarFinder/BaseStarFinder.h"
 
+#include "Utils/Images/MatrixImage.h"
+
 using namespace std;
 
 int main()
@@ -37,6 +39,8 @@ int main()
 			matrix[i][j] = pixels::RGB_Pixel(50 * i, 50 * j, 0, 255);
 		}
 	}
+
+	images::MatrixImageDto<pixels::RGB_Pixel> dto{{5, 5}, matrix};
 
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {

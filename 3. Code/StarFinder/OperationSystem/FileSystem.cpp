@@ -3,13 +3,13 @@
 #include "../Dependencies/lodepng/lodepng.h"
 #include "../Errors/Errors.h"
 
-pixels::RGB_Pixel** decode_image(unsigned char* encoded_image, unsigned width, unsigned height) {
-    pixels::RGB_Pixel** matrix = new pixels::RGB_Pixel * [width];
-    for (unsigned x = 0; x < width; ++x) {
-        matrix[x] = new pixels::RGB_Pixel[height];
+pixels::RGB_Pixel** decode_image(data_structures::Coordinates shape, unsigned char* encoded_image) {
+    pixels::RGB_Pixel** matrix = new pixels::RGB_Pixel*[shape.x];
+    for (unsigned x = 0; x < shape.x; ++x) {
+        matrix[x] = new pixels::RGB_Pixel[shape.y];
     }
-    for (size_t i = 0; i < width * height; ++i) {
-        matrix[i % width][i / width] = pixels::RGB_Pixel(
+    for (size_t i = 0; i < shape.x * shape.y; ++i) {
+        matrix[i % shape.x][i / shape.x] = pixels::RGB_Pixel(
             encoded_image[i * 4],
             encoded_image[i * 4 + 1],
             encoded_image[i * 4 + 2],
@@ -35,7 +35,8 @@ pixels::RGB_Pixel** operation_system::FileSystem::read_image(const char* path) c
         free(encoded_image);
         throw errors::FileLoadError("Lodepng: unable to decode file", path);
     }
-    pixels::RGB_Pixel** decoded_image = decode_image(encoded_image, width, height);
+    data_structures::Coordinates shape{width, height};
+    pixels::RGB_Pixel** decoded_image = decode_image(shape, encoded_image);
     free(encoded_image);
     return decoded_image;
 }

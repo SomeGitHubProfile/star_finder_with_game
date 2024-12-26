@@ -62,3 +62,7 @@ void operation_system::FileSystem::save_image(const char* path, const images::Im
     }
     return;
 }
+
+//images::RGB_ImageDto* operation_system::FileSystem::test() const {
+//    return nullptr;
+//}

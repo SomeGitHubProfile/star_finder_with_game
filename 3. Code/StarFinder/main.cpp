@@ -42,6 +42,8 @@ int main()
 
 	images::RGB_ImageDto dto{{5, 5}, matrix};
 
+	cout << "Red: " << (int)dto.matrix[4][2].get_red() << '\n';
+
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
 			cout << (int)matrix[i][j].get_red() << " " << (int)matrix[i][j].get_green() << " --- ";

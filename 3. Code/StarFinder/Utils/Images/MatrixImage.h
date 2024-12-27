@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Image.h"
-#include "../../Utils/Coordinates.h"
-#include "../../OperationSystem/OperationSystem.h"
 
 namespace images {
     template <typename T>
@@ -30,10 +28,6 @@ namespace images {
 
         virtual inline const pixels::Pixel* get_pixel(data_structures::Coordinates coordinates) const override {
             return matrix[coordinates.x] + coordinates.y;
-        }
-
-        virtual void save(const char* path) const override {
-            return operation_system::file_system.save_image(path, this);
         }
     };
 }

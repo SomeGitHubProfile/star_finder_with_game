@@ -21,6 +21,11 @@ const pixels::Pixel* model::base::BaseSourceImage::get_pixel(data_structures::Co
 }
 
 images::Image* model::base::BaseSourceImage::outline_stars(Stars* stars) noexcept {
-    
-    return nullptr;
+    images::RGB_Image* image = new images::RGB_Image(shape);
+    for (size_t x = 0; x < shape.x; ++x) {
+        for (size_t y = 0; y < shape.y; ++y) {
+            
+        }
+    }
+    return image;
 }

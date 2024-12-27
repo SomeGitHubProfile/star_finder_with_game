@@ -36,7 +36,7 @@ namespace images {
         }
 
         MatrixImageDto<T>(const MatrixImageDto& rhs) : shape(rhs.shape) {
-            matrix = new T * [shape.x];
+            matrix = new T*[shape.x];
             for (size_t x = 0; x < shape.x; ++x) {
                 matrix[x] = new T[shape.y];
                 for (size_t y = 0; y < shape.y; ++y) {
@@ -69,6 +69,4 @@ namespace images {
             delete_matrix<T>(shape, matrix);
         }
     };
-
-    typedef MatrixImageDto<pixels::RGB_Pixel> RGB_ImageDto;
 }

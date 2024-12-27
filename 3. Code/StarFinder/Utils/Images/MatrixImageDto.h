@@ -1,24 +1,9 @@
 #pragma once
 
 #include "../Pixels/RGB/RGB_Pixel.h"
-#include "CopyMatrix.h"
+#include "Matrix.h"
 
 namespace images {
-    /* TODO TODO TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    * here is template function, but in operation system we have the same,
-    * but only for rgb pixel.
-    * This is very bad code, refactor will not help.
-    * This project should be written from the beginning, with better architecture.
-    */
-    template <typename T>
-    void delete_matrix(const data_structures::Coordinates& shape, T** matrix) {
-        for (size_t x = 0; x < shape.x; ++x) {
-            delete[] matrix[x];
-        }
-        delete[] matrix;
-        return;
-    }
-
     template<typename T>
     class MatrixImageDto {
     public:

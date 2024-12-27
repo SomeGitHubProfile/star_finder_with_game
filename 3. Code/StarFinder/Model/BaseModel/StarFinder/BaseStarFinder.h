@@ -13,14 +13,14 @@ namespace model::base {
     private:
         typedef data_structures::DisjointSet<data_structures::Coordinates> DisjointUnionSet;
         typedef data_structures::SinglyLinkedList<data_structures::Coordinates> Component;
-        typedef std::unique_ptr<Component> ComponentPtr;
+        typedef std::shared_ptr<Component> ComponentPtr;
         typedef data_structures::SinglyLinkedList<ComponentPtr> Components;
 
         struct HashTableValue {
             data_structures::Coordinates coordinates;
             Components::Node* component_node;
 
-            HashTableValue(data_structures::Coordinates, Components::Node* component_node);
+            HashTableValue(data_structures::Coordinates, Components::Node*);
             size_t hash() const noexcept;
             bool operator==(const HashTableValue& rhs) const noexcept;
             bool operator!=(const HashTableValue& rhs) const noexcept;
@@ -33,7 +33,7 @@ namespace model::base {
         images::GrayImage* get_boundaries_image() const noexcept;
         size_t get_index_in_disjoint_set(data_structures::Coordinates coordinates) const noexcept;
         DisjointUnionSet make_disjoint_set() const noexcept;
-        ComponentPtr make_component_ptr(data_structures::Coordinates coordinates) const noexcept;
+        ComponentPtr make_component_ptr() const noexcept;
         Components get_components(DisjointUnionSet disjoint_set) const noexcept;
         Star* get_star(Component* component) const noexcept;
     public:

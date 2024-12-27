@@ -81,8 +81,8 @@ model::base::BaseStarFinder::DisjointUnionSet model::base::BaseStarFinder::make_
 }
 
 
-inline model::base::BaseStarFinder::ComponentPtr model::base::BaseStarFinder::make_component_ptr(data_structures::Coordinates coordinates) const noexcept {
-    return std::make_unique<Component>(coordinates);
+inline model::base::BaseStarFinder::ComponentPtr model::base::BaseStarFinder::make_component_ptr() const noexcept {
+    return std::make_shared<Component>();
 }
 
 model::base::BaseStarFinder::Components model::base::BaseStarFinder::get_components(DisjointUnionSet disjoint_set) const noexcept {
@@ -96,7 +96,8 @@ model::base::BaseStarFinder::Components model::base::BaseStarFinder::get_compone
         if (node) {
             node->value.component_node->value.get()->insert(coordinates);
         } else {
-            ComponentPtr component_ptr = make_component_ptr(parent_coordinates);
+            ComponentPtr component_ptr = make_component_ptr();
+            component_ptr.get()->insert(parent_coordinates);
             table.insert(HashTableValue(parent_coordinates, components.insert(component_ptr)));
             if (coordinates != parent_coordinates) {
                 component_ptr.get()->insert(coordinates);
@@ -137,15 +138,15 @@ model::Star* model::base::BaseStarFinder::get_star(Component* component) const n
 }
 
 model::Stars* model::base::BaseStarFinder::find_stars() noexcept {
-    images::GrayImage* boundaries_image = get_boundaries_image();
-    DisjointUnionSet disjoint_set = make_disjoint_set();
-    Components components = get_components(disjoint_set);
+    //images::GrayImage* boundaries_image = get_boundaries_image();
+    //DisjointUnionSet disjoint_set = make_disjoint_set();
+    //Components components = get_components(disjoint_set);
     Stars* stars = star_finder_params.new_stars();
-    for (Components::Node* node = components.begin; node != nullptr; node = node->next) {
+    /*for (Components::Node* node = components.begin; node != nullptr; node = node->next) {
         Star* star = get_star(node->value.get());
         if (star) {
             stars->add_star(star);
         }
-    }
+    }*/
     return stars;
 }

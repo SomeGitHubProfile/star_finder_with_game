@@ -1,5 +1,6 @@
 #pragma once
 
+#include <type_traits>
 #include "Coordinates.h"
 
 namespace data_structures {
@@ -11,6 +12,7 @@ namespace data_structures {
 			Node* next;
 
 			Node(T _value, Node* _next) : value(_value), next(_next) {}
+			
 		};
 
 		size_t size;
@@ -27,10 +29,14 @@ namespace data_structures {
 			}
 		}
 
-		void add(const T& value) {
-			begin = Node(value, begin);
+		Node* insert(const T& value) {
 			++size;
-			return;
+			return begin = new Node(value, begin);
+		}
+
+		Node* insert_after(Node* node, const T& value) {
+			++size;
+			return node->next = new Node(value, node->next);
 		}
 	};
 }

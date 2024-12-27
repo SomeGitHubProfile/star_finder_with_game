@@ -40,9 +40,13 @@ namespace data_structures {
             return node->parent = find_parent(node->parent);
         }
 
+        Node* find_parent(size_t index) {
+            return find_parent(set[index]);
+        }
+
         void unite(size_t a, size_t b) {
-            Node* a_parent = find_parent(set[a]);
-            Node* b_parent = find_parent(set[b]);
+            Node* a_parent = find_parent(a);
+            Node* b_parent = find_parent(b);
             if (a_parent == b_parent) {
                 return;
             }

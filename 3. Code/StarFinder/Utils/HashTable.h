@@ -3,14 +3,15 @@
 #include "Coordinates.h"
 
 namespace data_structures {
+    template <typename T>
     struct HashTable {
     public:
         struct Node {
-            Coordinates coordinates;
+            T value;
             Node* next;
 
-            Node(Coordinates _coordinates)
-                : coordinates(_coordinates),
+            Node(T _value)
+                : value(_value),
                 next(nullptr) {}
         };
 
@@ -39,31 +40,27 @@ namespace data_structures {
             delete[] table;
         }
 
-        inline size_t hash(const Coordinates& coordinates) {
-            return ((coordinates.x * 18181) + (coordinates.y * 18899)) % size;
+        inline size_t hash(const T& value) {
+            return value.hash() % size;
         }
 
-        void insert(const Coordinates& coordinates) {
-            size_t index = hash(coordinates);
+        Node* insert(const T& value) {
+            size_t index = hash(value);
             if (table[index] == nullptr) {
-                table[index] = new Node(coordinates);
+                return table[index] = new Node(value);
             }
-            else {
-                Node* current = table[index];
-                while (current->next != nullptr) {
-                    current = current->next;
-                }
-                current->next = new Node(coordinates);
+            Node* current = table[index];
+            while (current->next != nullptr) {
+                current = current->next;
             }
-            return;
+            return current->next = new Node(value);
         }
 
-        Node* search(const Coordinates& coordinates) {
-            size_t index = hash(coordinates);
+        Node* search(const T& value) {
+            size_t index = hash(value);
             Node* current = table[index];
             while (current != nullptr) {
-                if (current->coordinates.x == coordinates.x
-                    && current->coordinates.y == coordinates.y) {
+                if (value == current->value) {
                     return current;
                 }
                 current = current->next;

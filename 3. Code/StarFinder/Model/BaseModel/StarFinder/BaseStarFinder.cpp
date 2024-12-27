@@ -138,15 +138,15 @@ model::Star* model::base::BaseStarFinder::get_star(Component* component) const n
 }
 
 model::Stars* model::base::BaseStarFinder::find_stars() noexcept {
-    //images::GrayImage* boundaries_image = get_boundaries_image();
-    //DisjointUnionSet disjoint_set = make_disjoint_set();
-    //Components components = get_components(disjoint_set);
+    images::GrayImage* boundaries_image = get_boundaries_image();
+    DisjointUnionSet disjoint_set = make_disjoint_set();
+    Components components = get_components(disjoint_set);
     Stars* stars = star_finder_params.new_stars();
-    /*for (Components::Node* node = components.begin; node != nullptr; node = node->next) {
+    for (Components::Node* node = components.begin; node != nullptr; node = node->next) {
         Star* star = get_star(node->value.get());
         if (star) {
             stars->add_star(star);
         }
-    }*/
+    }
     return stars;
 }

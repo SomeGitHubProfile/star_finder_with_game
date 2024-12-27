@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Image.h"
+#include "MatrixImageDto.h"
 
 namespace images {
     template <typename T>
@@ -8,16 +9,24 @@ namespace images {
     protected:
         T** matrix;
     public:
-        MatrixImage<T>(data_structures::Coordinates shape) : Image(shape) {
+        MatrixImage<T>(const data_structures::Coordinates& shape) : Image(shape) {
             matrix = new T*[shape.x];
-            for (size_t i = 0; i < shape.x; ++i) {
-                matrix[i] = new T[shape.y];
+            for (size_t x = 0; x < shape.x; ++x) {
+                matrix[x] = new T[shape.y];
             }
         }
 
+        MatrixImage<T>(const data_structures::Coordinates& shape, T** _matrix)
+            : Image(shape),
+            matrix(copy_matrix<T>(shape, _matrix)) {}
+
+        MatrixImage<T>(const MatrixImageDto<T>& dto)
+            : Image(dto.shape),
+            matrix(copy_matrix(shape, dto.matrix)) {}
+
         virtual ~MatrixImage<T>() {
-            for (size_t i = 0; i < shape.x; ++i) {
-                delete matrix[i];
+            for (size_t x = 0; x < shape.x; ++x) {
+                delete matrix[x];
             }
             delete[] matrix;
         }

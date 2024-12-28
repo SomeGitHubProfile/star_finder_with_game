@@ -25,10 +25,7 @@ namespace images {
             matrix(copy_matrix(shape, dto.matrix)) {}
 
         virtual ~MatrixImage<T>() {
-            for (size_t x = 0; x < shape.x; ++x) {
-                delete matrix[x];
-            }
-            delete[] matrix;
+            delete_matrix(shape, matrix);
         }
 
         inline T& operator[](data_structures::Coordinates coordinates) {

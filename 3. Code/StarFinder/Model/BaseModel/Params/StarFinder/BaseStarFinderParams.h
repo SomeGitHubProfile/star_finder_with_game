@@ -8,7 +8,10 @@
 namespace model::base::params {
     class BaseStarFinderParams : public Params {
     public:
-        float boundaries_detection_strength; // number in segment [0, 32]
+        unsigned char red_difference;
+        unsigned char green_difference;
+        unsigned char blue_difference;
+        unsigned char alpha_difference;
 
         filters::gaussian::KernelTypes gaussian_kernel_type;
         filters::sobel::KernelTypes sobel_kernel_type;
@@ -16,10 +19,20 @@ namespace model::base::params {
         const char* image_file_path;
         const char* stars_file_path;
 
-        BaseStarFinderParams(SourceImage*, float);
         BaseStarFinderParams(
             SourceImage*,
-            float boundaries_detection_strength,
+            unsigned char red_difference,
+            unsigned char green_difference,
+            unsigned char blue_difference,
+            unsigned char alpha_difference
+        );
+
+        BaseStarFinderParams(
+            SourceImage*,
+            unsigned char red_difference,
+            unsigned char green_difference,
+            unsigned char blue_difference,
+            unsigned char alpha_difference,
             filters::gaussian::KernelTypes gaussian_kernel_type,
             filters::sobel::KernelTypes sobel_kernel_type,
             const char* image_file_path,

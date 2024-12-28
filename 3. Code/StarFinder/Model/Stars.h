@@ -4,7 +4,7 @@
 
 namespace model {
     class Stars {
-    private:
+    protected:
         size_t size;
     public:
         Stars() : size(0) {}

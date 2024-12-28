@@ -18,7 +18,7 @@ namespace images {
             : shape(rhs.shape),
             matrix(copy_matrix<T>(rhs.shape, rhs.matrix)) {}
 
-        MatrixImageDto<T>(MatrixImageDto&& rhs) : shape(rhs.shape) {
+        MatrixImageDto<T>(MatrixImageDto&& rhs) noexcept : shape(rhs.shape) {
             matrix = rhs.matrix;
         }
 

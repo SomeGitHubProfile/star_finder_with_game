@@ -40,11 +40,14 @@ size_t model::base::BaseStarFinder::get_index_in_disjoint_set(data_structures::C
     return coordinates.x * star_finder_params.source_image->shape.y + coordinates.y;
 }
 
+#include <iostream>
+
 model::base::BaseStarFinder::DisjointUnionSet model::base::BaseStarFinder::make_disjoint_set() const noexcept {
     DisjointUnionSet disjoint_set(star_finder_params.source_image->shape.x * star_finder_params.source_image->shape.y);
     for (size_t x = 0; x < star_finder_params.source_image->shape.x; ++x) {
         for (size_t y = 0; y < star_finder_params.source_image->shape.y; ++y) {
-            disjoint_set.set[get_index_in_disjoint_set({x, y})] = new data_structures::DisjointSet< data_structures::Coordinates>::Node({x, y});
+            data_structures::Coordinates coordinates{x, y};
+            disjoint_set.add_node(get_index_in_disjoint_set(coordinates), coordinates);
         }
     }
 
@@ -64,12 +67,20 @@ model::base::BaseStarFinder::DisjointUnionSet model::base::BaseStarFinder::make_
                     }
                     data_structures::Coordinates neighbour_pixel_coordinates{x + i, y + j};
                     const pixels::Pixel* neighbour_pixel = star_finder_params.source_image->get_pixel(neighbour_pixel_coordinates);
-                    float red_diff = pixel->get_red() - neighbour_pixel->get_red();
-                    float green_diff = pixel->get_green() - neighbour_pixel->get_green();
-                    float blue_diff = pixel->get_blue() - neighbour_pixel->get_blue();
-                    float alpha_diff = pixel->alpha - neighbour_pixel->alpha;
-                    float difference = sqrt(red_diff * red_diff + green_diff * green_diff + blue_diff * blue_diff + alpha_diff * alpha_diff);
-                    if (difference < star_finder_params.boundaries_detection_strength) {
+                    float red_difference = std::abs(static_cast<int>(pixel->get_red()) - static_cast<int>(neighbour_pixel->get_red()));
+                    float green_difference = std::abs(static_cast<int>(pixel->get_green()) - static_cast<int>(neighbour_pixel->get_green()));
+                    float blue_difference = std::abs(static_cast<int>(pixel->get_blue()) - static_cast<int>(neighbour_pixel->get_blue()));
+                    float alpha_difference = std::abs(static_cast<int>(pixel->alpha) - static_cast<int>(neighbour_pixel->alpha));
+                    if (/*
+                        red_difference < star_finder_params.red_difference
+                        && green_difference < star_finder_params.green_difference
+                        && blue_difference < star_finder_params.blue_difference
+                        && alpha_difference < star_finder_params.alpha_difference
+                        && */pixel->get_red() > star_finder_params.red_difference
+                        && pixel->get_green() > star_finder_params.green_difference
+                        && pixel->get_blue() > star_finder_params.blue_difference
+                        && pixel->alpha > star_finder_params.alpha_difference
+                    ) {
                         disjoint_set.unite(get_index_in_disjoint_set(pixel_coordinates), get_index_in_disjoint_set(neighbour_pixel_coordinates));
                     }
                 }
@@ -114,7 +125,7 @@ model::Star* model::base::BaseStarFinder::get_star(Component* component) const n
     size_t min_y = coordinates.y;
     size_t max_y = coordinates.y;
     for (Component::Node* node = component->begin->next; node != nullptr; node = node->next) {
-        const data_structures::Coordinates& coordinates = node->value;
+        data_structures::Coordinates coordinates = node->value;
         if (coordinates.x < min_x) {
             min_x = coordinates.x;
         }
@@ -128,17 +139,21 @@ model::Star* model::base::BaseStarFinder::get_star(Component* component) const n
             max_y = coordinates.y;
         }
     }
-    if (max_x - min_x < 10 && max_y - min_y < 10) {
+    if (1 < max_x - min_x && max_x - min_x < 100 && 1 < max_y - min_y && max_y - min_y < 100) {
         size_t center_x = (min_x + max_x) / 2;
         size_t center_y = (min_y + max_y) / 2;
         size_t radius = std::max(max_x - center_x, max_y - center_y);
         return star_finder_params.new_star({center_x, center_y}, radius);
     }
     return nullptr;
+    size_t center_x = (min_x + max_x) / 2;
+    size_t center_y = (min_y + max_y) / 2;
+    size_t radius = std::max(max_x - center_x, max_y - center_y);
+    return star_finder_params.new_star({center_x, center_y}, radius);
 }
 
 model::Stars* model::base::BaseStarFinder::find_stars() noexcept {
-    images::GrayImage* boundaries_image = get_boundaries_image();
+    //images::GrayImage* boundaries_image = get_boundaries_image();
     DisjointUnionSet disjoint_set = make_disjoint_set();
     Components components = get_components(disjoint_set);
     Stars* stars = star_finder_params.new_stars();

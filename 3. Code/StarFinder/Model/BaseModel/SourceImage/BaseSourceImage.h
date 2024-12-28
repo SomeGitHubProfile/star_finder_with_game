@@ -10,7 +10,7 @@ namespace model::base {
     class BaseSourceImage : public virtual images::RGB_Image, public virtual SourceImage {
     private:
         BaseSourceImageParams image_params;
-        void outline_star(data_structures::Coordinates center) noexcept;
+        void outline_star(Star*, pixels::RGB_Pixel**) noexcept;
 
     public:
         BaseSourceImage(const params::BaseSourceImageParams&);

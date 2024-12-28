@@ -5,9 +5,9 @@
 namespace model {
     class Star {
     public:
-        const data_structures::Coordinates coordinates;
+        const data_structures::Coordinates center;
         const size_t radius;
 
-        Star(data_structures::Coordinates _coordinates, size_t _radius) : coordinates(_coordinates), radius(_radius) {}
+        Star(data_structures::Coordinates _center, size_t _radius) : center(_center), radius(_radius) {}
     };
 }

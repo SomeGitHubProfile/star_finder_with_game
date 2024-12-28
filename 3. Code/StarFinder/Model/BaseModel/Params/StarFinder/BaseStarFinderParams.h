@@ -5,22 +5,41 @@
 #include "../../../../Filters/Gaussian/GaussianFilter.h"
 #include "../../../../Filters/Sobel/SobelFilter.h"
 
-#include <iostream>
-
 namespace model::base::params {
     class BaseStarFinderParams : public Params {
     public:
-        const char* image_file_path;
-        const char* stars_file_path;
+        unsigned char red_difference;
+        unsigned char green_difference;
+        unsigned char blue_difference;
+        unsigned char alpha_difference;
 
         filters::gaussian::KernelTypes gaussian_kernel_type;
         filters::sobel::KernelTypes sobel_kernel_type;
 
-        BaseStarFinderParams(SourceImage* source_image);
-        virtual ~BaseStarFinderParams() {
-            std::cout << "Base star finder params destructor\n";
-        }
+        const char* image_file_path;
+        const char* stars_file_path;
+
+        BaseStarFinderParams(
+            SourceImage*,
+            unsigned char red_difference,
+            unsigned char green_difference,
+            unsigned char blue_difference,
+            unsigned char alpha_difference
+        );
+
+        BaseStarFinderParams(
+            SourceImage*,
+            unsigned char red_difference,
+            unsigned char green_difference,
+            unsigned char blue_difference,
+            unsigned char alpha_difference,
+            filters::gaussian::KernelTypes gaussian_kernel_type,
+            filters::sobel::KernelTypes sobel_kernel_type,
+            const char* image_file_path,
+            const char* stars_file_path
+        );
 
         virtual Stars* new_stars() const override;
+        virtual Star* new_star(data_structures::Coordinates center, size_t radius) const override;
     };
 }

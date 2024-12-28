@@ -4,13 +4,17 @@
 
 namespace model {
     class Stars {
-    public:
+    protected:
         size_t size;
-
+    public:
         Stars() : size(0) {}
         Stars(size_t _size) : size(_size) {}
 
-        virtual Star* operator[](size_t) = 0;
+        inline size_t get_size() {
+            return size;
+        }
+
+        virtual Star* get_star(size_t) = 0;
         virtual void add_star(Star*) noexcept = 0;
     };
 }

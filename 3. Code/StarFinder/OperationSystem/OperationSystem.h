@@ -1,8 +1,6 @@
 #pragma once
 
-#include "../Utils/Pixels/RGB/RGB_Pixel.h"
-#include "../Utils/Images/Image.h"
-#include "../Utils/Images/MatrixImageDto.h"
+#include "../Utils/Images/RGB_Image.h"
 
 namespace operation_system {
     static class FileSystem {

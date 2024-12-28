@@ -106,7 +106,7 @@ namespace data_structures {
             if (a_parent == b_parent) {
                 return;
             }
-            if (a_parent->rank < b_parent->rank) {
+            if (b_parent->rank < a_parent->rank) {
                 std::swap(a_parent, b_parent);
             } else if (a_parent->rank == b_parent->rank) {
                 ++b_parent->rank;

@@ -57,7 +57,7 @@ model::base::BaseStarFinder::DisjointUnionSet model::base::BaseStarFinder::make_
             const pixels::Pixel* pixel = star_finder_params.source_image->get_pixel(pixel_coordinates);
             for (char i = -1; i < 2; ++i) {
                 for (char j = -1; j < 2; ++j) {
-                    if (i == j
+                    if (i == 0 && j == 0
                         || x + i < 0
                         || star_finder_params.source_image->shape.x <= x + i
                         || y + j < 0
@@ -67,16 +67,7 @@ model::base::BaseStarFinder::DisjointUnionSet model::base::BaseStarFinder::make_
                     }
                     data_structures::Coordinates neighbour_pixel_coordinates{x + i, y + j};
                     const pixels::Pixel* neighbour_pixel = star_finder_params.source_image->get_pixel(neighbour_pixel_coordinates);
-                    float red_difference = std::abs(static_cast<int>(pixel->get_red()) - static_cast<int>(neighbour_pixel->get_red()));
-                    float green_difference = std::abs(static_cast<int>(pixel->get_green()) - static_cast<int>(neighbour_pixel->get_green()));
-                    float blue_difference = std::abs(static_cast<int>(pixel->get_blue()) - static_cast<int>(neighbour_pixel->get_blue()));
-                    float alpha_difference = std::abs(static_cast<int>(pixel->alpha) - static_cast<int>(neighbour_pixel->alpha));
-                    if (/*
-                        red_difference < star_finder_params.red_difference
-                        && green_difference < star_finder_params.green_difference
-                        && blue_difference < star_finder_params.blue_difference
-                        && alpha_difference < star_finder_params.alpha_difference
-                        && */pixel->get_red() > star_finder_params.red_difference
+                    if (pixel->get_red() > star_finder_params.red_difference
                         && pixel->get_green() > star_finder_params.green_difference
                         && pixel->get_blue() > star_finder_params.blue_difference
                         && pixel->alpha > star_finder_params.alpha_difference

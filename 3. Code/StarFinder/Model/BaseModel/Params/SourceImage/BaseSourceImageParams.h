@@ -21,6 +21,7 @@ namespace model::base::params {
         OutlineTypes outline_type;
 
         BaseSourceImageParams(const char*, pixels::RGB_Pixel, pixels::RGB_Pixel, size_t);
+        BaseSourceImageParams(const char*, pixels::RGB_Pixel, pixels::RGB_Pixel, size_t, size_t, size_t);
         void init_source_image_dto();
     };
 }

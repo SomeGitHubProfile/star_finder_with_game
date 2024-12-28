@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Pixels/RGB/RGB_Pixel.h"
 #include "Matrix.h"
 
 namespace images {

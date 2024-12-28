@@ -49,9 +49,29 @@ pixels::RGB_Pixel get_next_color() {
 
 void model::base::BaseSourceImage::outline_star(Star* star, pixels::RGB_Pixel** outlined_matrix) noexcept {
     pixels::RGB_Pixel pixel = get_next_color();
-    for (size_t x = std::max(static_cast<long long>(star->center.x - star->radius), 0LL); x < std::min(static_cast<long long>(star->center.x + star->radius), static_cast<long long>(shape.x)); ++x) {
-        for (size_t y = std::max(static_cast<long long>(star->center.y - star->radius), 0LL); y < std::min(static_cast<long long>(star->center.y + star->radius), static_cast<long long>(shape.y)); ++y) {
+    size_t x, y;
+    if (image_params.minimal_outline_radius < star->radius) {
+        y = std::max(static_cast<long long>(star->center.y - star->radius), 0LL);
+        for (x = std::max(static_cast<long long>(star->center.x - star->radius), 0LL); x < std::min(static_cast<long long>(star->center.x + star->radius), static_cast<long long>(shape.x)); ++x) {
             outlined_matrix[x][y] = pixel;
+        }
+        y = std::min(static_cast<long long>(star->center.y + star->radius), static_cast<long long>(shape.y)) - 1;
+        for (x = std::max(static_cast<long long>(star->center.x - star->radius), 0LL); x < std::min(static_cast<long long>(star->center.x + star->radius), static_cast<long long>(shape.x)); ++x) {
+            outlined_matrix[x][y] = pixel;
+        }
+        x = std::max(static_cast<long long>(star->center.x - star->radius), 0LL);
+        for (y = std::max(static_cast<long long>(star->center.y - star->radius), 0LL); y < std::min(static_cast<long long>(star->center.y + star->radius), static_cast<long long>(shape.y)); ++y) {
+            outlined_matrix[x][y] = pixel;
+        }
+        x = std::min(static_cast<long long>(star->center.x + star->radius), static_cast<long long>(shape.x)) - 1;
+        for (y = std::max(static_cast<long long>(star->center.y - star->radius), 0LL); y < std::min(static_cast<long long>(star->center.y + star->radius), static_cast<long long>(shape.y)); ++y) {
+            outlined_matrix[x][y] = pixel;
+        }
+    } else {
+        for (size_t x = std::max(static_cast<long long>(star->center.x - star->radius), 0LL); x < std::min(static_cast<long long>(star->center.x + star->radius), static_cast<long long>(shape.x)); ++x) {
+            for (size_t y = std::max(static_cast<long long>(star->center.y - star->radius), 0LL); y < std::min(static_cast<long long>(star->center.y + star->radius), static_cast<long long>(shape.y)); ++y) {
+                outlined_matrix[x][y] = pixel;
+            }
         }
     }
     return;

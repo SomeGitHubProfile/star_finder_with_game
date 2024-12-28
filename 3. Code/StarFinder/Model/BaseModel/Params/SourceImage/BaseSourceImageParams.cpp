@@ -19,6 +19,23 @@ model::base::params::BaseSourceImageParams::BaseSourceImageParams(
     outline_type(OutlineTypes::Circle),
     dto({0, 0}, nullptr) {}
 
+model::base::params::BaseSourceImageParams::BaseSourceImageParams(
+    const char* _source_image_path,
+    pixels::RGB_Pixel _outline_color,
+    pixels::RGB_Pixel _inner_color,
+    size_t _boundary_width,
+    size_t _minimal_outline_radius,
+    size_t _padding
+)
+    : source_image_path(_source_image_path),
+    outline_color(_outline_color),
+    inner_color(_inner_color),
+    boundary_width(_boundary_width),
+    minimal_outline_radius(_minimal_outline_radius),
+    padding(_padding),
+    outline_type(OutlineTypes::Circle),
+    dto({0, 0}, nullptr) {}
+
 void model::base::params::BaseSourceImageParams::init_source_image_dto() {
      dto = operation_system::file_system.read_image(source_image_path);
      return;

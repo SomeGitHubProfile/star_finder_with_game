@@ -22,7 +22,13 @@ int main()
 		model::base::params::BaseSourceImageParams image_params{source_file_path.c_str(), pixels::RGB_Pixel(188, 138, 232, 255), pixels::RGB_Pixel(188, 138, 232, 255), 0};
 		image_params.init_source_image_dto();
 		model::SourceImage* image = new model::base::BaseSourceImage(image_params);
-		model::base::params::BaseStarFinderParams params{image, 100, 100, 200, 254};
+		unsigned char red;
+		unsigned char green;
+		unsigned char blue;
+		unsigned char alpha;
+		cout << "Input color (red, green, blue, alpha). Pixels, which all color components will be greater, than color, will be interpreted as stars.\n";
+		cin >> red >> green >> blue >> alpha;
+		model::base::params::BaseStarFinderParams params{image, red, green, blue, alpha};
 		model::StarFinder* star_finder = new model::base::BaseStarFinder(params);
 		model::Stars* stars = star_finder->find_stars();
 		images::Image* outlined_image = image->outline_stars(stars);
